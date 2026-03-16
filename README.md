@@ -1,5 +1,9 @@
 # Weather App (Bloc)
 
+<p align="center">
+<img width="256" height="512" alt="Simulator Screenshot - iPhone 16 Pro - 2026-03-16 at 17 27 33" src="https://github.com/user-attachments/assets/d7ef68ae-4cea-4c1d-b7f1-4bcd736ced19" />
+</p>
+
 A Flutter weather mobile app built with **Bloc** architecture, **OpenWeatherMap API**, and multi-language support (English, French, Spanish, Italian).
 
 ## Features
@@ -62,3 +66,6 @@ flutter test
 
 1. **Weather Dashboard** – Main screen with current weather and forecast
 2. **Settings & Location Search** – Search locations, change language and units
+
+
+
