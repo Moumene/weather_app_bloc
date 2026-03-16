@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Weather App - Settings &amp; Search</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Header & Search -->
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-4 pt-6 pb-2">
+<div class="flex items-center justify-between mb-4">
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined block">arrow_back</span>
+</button>
+<h1 class="text-xl font-bold tracking-tight">Weather Settings</h1>
+<div class="w-10"></div> <!-- Spacer for centering title -->
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3 bg-slate-200/50 dark:bg-slate-800/50 border-none rounded-xl focus:ring-2 focus:ring-primary placeholder:text-slate-500 text-base" placeholder="Search for a city or airport" type="text"/>
+</div>
+</header>
+<main class="flex-1 px-4 py-4 space-y-8 overflow-y-auto">
+<!-- Saved Locations -->
+<section>
+<div class="flex items-center justify-between mb-4 px-1">
+<h2 class="text-lg font-bold">Saved Locations</h2>
+<button class="text-primary font-medium text-sm">Edit</button>
+</div>
+<div class="space-y-3">
+<!-- Location Card 1 -->
+<div class="flex items-center justify-between gap-4 p-4 rounded-xl bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
+<div class="flex flex-col gap-1">
+<p class="text-base font-bold">San Francisco</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">18°C · Mostly Cloudy</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-16 h-10 rounded-lg overflow-hidden" data-alt="Cloudy sky over city silhouette" data-location="San Francisco" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCW0t4iqyVNafbCD1-Ns6wdVj5Lokc-jKIli8D4wbKuKRpOq4FX0wDutL7TPj9m250gZ1CXY4A7wbGq7YhKvK21BAL7_5vQ-jpVCW4QQuWWHWb08kpDwHFQVx1X42XTklN9zSs8d2YkJ5D2OYB4DFSZctLMDlxJar5iGJDThYUfYmhsiWAR_xrm72yP9979kzK8v1ivP1q_HZ-wLoQND77iUoS6eZ1NHYE_yd6BF6Vh_X9JW-6bFmPyQsD5pEAnDC-ECmPpTUH_WHk');"></div>
+<span class="text-2xl font-semibold">18°</span>
+</div>
+</div>
+<!-- Location Card 2 -->
+<div class="flex items-center justify-between gap-4 p-4 rounded-xl bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
+<div class="flex flex-col gap-1">
+<p class="text-base font-bold">New York</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">22°C · Sunny</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-16 h-10 rounded-lg overflow-hidden" data-alt="Clear blue sunny sky" data-location="New York" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTW1ky7343QNfQa0nOLKOcpWvOw_QoVD8QnZmi_B_o1HUjYTJAKTwjIBh6lCll-VzjVu4CJ96YAwZ7jHPV0LZWKYz4W2-B0hdWngkNEtgE9SXb1dZfuZpihGpZdxdzeedBek-1Vd8FxKqJKRZiw3r9H6p8KVqxn3vjgVCBDxn9_nfeXyWQKzD2ksysE3tvi2I2xnRMOv5voAa_c6SFD5yAMJMha3XbumiaWiIU-_990RVqt6ZThZ43cNPiJO1rNDiIShbpFdyJEHU');"></div>
+<span class="text-2xl font-semibold">22°</span>
+</div>
+</div>
+<!-- Location Card 3 -->
+<div class="flex items-center justify-between gap-4 p-4 rounded-xl bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800">
+<div class="flex flex-col gap-1">
+<p class="text-base font-bold">London</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">14°C · Light Rain</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-16 h-10 rounded-lg overflow-hidden" data-alt="Rainy city street view" data-location="London" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALcGkbyuEqDttQlNCGVyJoRcKyVBH_0JIRaHP2fy2LF0dGXsRHoAoky1FK7vgVS37q51djpX3CqPybSKSlWMur0P2cChcGb6nkOQJ0Z4XJbpI7CayOxEwYnyDacPdRCudbWY0he7AnN8O42mljGP3vDEm468jGxlgzqVQZ97fwTHd2MDnjZdiEb9KrVrscvwB4FtVEvUPxmM2XmQYI2OUGrRRKx_0ye6rcvPnIV6dWf6jzLJEliy4UPJzJQQLLJkgH2RJ22duUV7Q');"></div>
+<span class="text-2xl font-semibold">14°</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Preferences / Settings -->
+<section class="space-y-4">
+<h2 class="text-lg font-bold px-1">Settings</h2>
+<div class="bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+<!-- Temperature Unit -->
+<div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">thermostat</span>
+<span class="font-medium">Temperature Unit</span>
+</div>
+<div class="flex bg-slate-200 dark:bg-slate-700 p-1 rounded-lg">
+<button class="px-3 py-1 bg-white dark:bg-primary rounded-md text-xs font-bold shadow-sm">°C</button>
+<button class="px-3 py-1 text-xs font-bold text-slate-500 dark:text-slate-300">°F</button>
+</div>
+</div>
+<!-- Notifications -->
+<div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<span class="font-medium">Severe Weather Alerts</span>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-300 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</div>
+<!-- Daily Forecast Toggle -->
+<div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">event_note</span>
+<span class="font-medium">Daily Summary</span>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-300 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+</div>
+<!-- Language Selection -->
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">language</span>
+<span class="font-medium">Language</span>
+</div>
+<div class="flex items-center gap-1 text-slate-500 dark:text-slate-400 text-sm">
+<span>English</span>
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Account Section -->
+<section class="space-y-4 pb-24">
+<h2 class="text-lg font-bold px-1">Legal</h2>
+<div class="bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+<div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+<span class="font-medium">Privacy Policy</span>
+<span class="material-symbols-outlined text-slate-500">open_in_new</span>
+</div>
+<div class="flex items-center justify-between p-4">
+<span class="font-medium">Terms of Service</span>
+<span class="material-symbols-outlined text-slate-500">open_in_new</span>
+</div>
+</div>
+<p class="text-center text-slate-500 text-xs pt-4 tracking-wide uppercase">Version 2.4.0 (128)</p>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-6 py-2 pb-6">
+<div class="max-w-md mx-auto flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">cloud</span>
+<span class="text-[10px] font-semibold uppercase tracking-wider">Weather</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-[10px] font-semibold uppercase tracking-wider">Forecast</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">settings</span>
+<span class="text-[10px] font-semibold uppercase tracking-wider">Settings</span>
+</a>
+</div>
+</nav>
+</body></html>

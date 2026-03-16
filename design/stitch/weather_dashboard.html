@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SkyCast - Weather Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#258cf4",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Background Gradient Overlay -->
+<div class="fixed inset-0 -z-10 bg-gradient-to-b from-blue-600 via-primary to-background-dark opacity-40"></div>
+<div class="max-w-md mx-auto px-4 py-8 space-y-8">
+<!-- Header / Current Weather -->
+<header class="text-center py-6">
+<h1 class="text-3xl font-semibold mb-1">San Francisco</h1>
+<p class="text-6xl font-extralight tracking-tighter mb-2">19°</p>
+<p class="text-slate-400 font-medium">Mostly Clear</p>
+<div class="flex justify-center gap-2 mt-1 text-sm font-medium">
+<span>H:22°</span>
+<span>L:14°</span>
+</div>
+</header>
+<!-- Hourly Forecast -->
+<section class="glass rounded-xl p-4 overflow-hidden">
+<div class="flex items-center gap-2 mb-4 px-1 text-slate-400">
+<span class="material-icons-round text-sm">schedule</span>
+<span class="text-xs font-bold uppercase tracking-wider">Hourly Forecast</span>
+</div>
+<div class="flex overflow-x-auto gap-6 pb-2 hide-scrollbar">
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-xs font-semibold">Now</span>
+<span class="material-icons-round text-primary">wb_sunny</span>
+<span class="text-lg font-medium">19°</span>
+</div>
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-xs font-semibold">1 PM</span>
+<span class="material-icons-round text-primary">wb_sunny</span>
+<span class="text-lg font-medium">20°</span>
+</div>
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-xs font-semibold">2 PM</span>
+<span class="material-icons-round text-primary">wb_sunny</span>
+<span class="text-lg font-medium">21°</span>
+</div>
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-xs font-semibold">3 PM</span>
+<span class="material-icons-round text-primary">cloud_queue</span>
+<span class="text-lg font-medium">22°</span>
+</div>
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-xs font-semibold">4 PM</span>
+<span class="material-icons-round text-primary">cloud_queue</span>
+<span class="text-lg font-medium">21°</span>
+</div>
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-xs font-semibold">5 PM</span>
+<span class="material-icons-round text-primary">wb_twilight</span>
+<span class="text-lg font-medium">19°</span>
+</div>
+<div class="flex flex-col items-center gap-3 min-w-[3rem]">
+<span class="text-xs font-semibold">6 PM</span>
+<span class="material-icons-round text-primary">nights_stay</span>
+<span class="text-lg font-medium">18°</span>
+</div>
+</div>
+</section>
+<!-- 10-Day Forecast -->
+<section class="glass rounded-xl p-4 space-y-4">
+<div class="flex items-center gap-2 mb-2 px-1 text-slate-400">
+<span class="material-icons-round text-sm">calendar_today</span>
+<span class="text-xs font-bold uppercase tracking-wider">10-Day Forecast</span>
+</div>
+<div class="space-y-4">
+<!-- Day Row -->
+<div class="flex items-center justify-between text-sm font-medium">
+<span class="w-10">Today</span>
+<span class="material-icons-round text-primary">wb_sunny</span>
+<div class="flex items-center gap-3 w-32">
+<span class="text-slate-400 w-6">14°</span>
+<div class="flex-1 h-1 bg-slate-700/50 rounded-full relative">
+<div class="absolute left-1/4 right-1/4 h-full bg-gradient-to-r from-yellow-400 to-primary rounded-full"></div>
+<div class="absolute left-[40%] top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full border-2 border-primary"></div>
+</div>
+<span class="w-6 text-right">22°</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm font-medium">
+<span class="w-10">Tue</span>
+<span class="material-icons-round text-primary">cloud_queue</span>
+<div class="flex items-center gap-3 w-32">
+<span class="text-slate-400 w-6">15°</span>
+<div class="flex-1 h-1 bg-slate-700/50 rounded-full relative">
+<div class="absolute left-1/3 right-1/5 h-full bg-gradient-to-r from-yellow-400 to-primary rounded-full"></div>
+</div>
+<span class="w-6 text-right">23°</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm font-medium">
+<span class="w-10">Wed</span>
+<span class="material-icons-round text-primary/70">grain</span>
+<div class="flex items-center gap-3 w-32">
+<span class="text-slate-400 w-6">12°</span>
+<div class="flex-1 h-1 bg-slate-700/50 rounded-full relative">
+<div class="absolute left-[10%] right-[60%] h-full bg-gradient-to-r from-blue-400 to-primary rounded-full"></div>
+</div>
+<span class="w-6 text-right">17°</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm font-medium">
+<span class="w-10">Thu</span>
+<span class="material-icons-round text-primary">wb_sunny</span>
+<div class="flex items-center gap-3 w-32">
+<span class="text-slate-400 w-6">14°</span>
+<div class="flex-1 h-1 bg-slate-700/50 rounded-full relative">
+<div class="absolute left-1/4 right-1/4 h-full bg-gradient-to-r from-yellow-400 to-primary rounded-full"></div>
+</div>
+<span class="w-6 text-right">22°</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-sm font-medium">
+<span class="w-10">Fri</span>
+<span class="material-icons-round text-primary">wb_sunny</span>
+<div class="flex items-center gap-3 w-32">
+<span class="text-slate-400 w-6">16°</span>
+<div class="flex-1 h-1 bg-slate-700/50 rounded-full relative">
+<div class="absolute left-1/2 right-1/6 h-full bg-gradient-to-r from-yellow-400 to-primary rounded-full"></div>
+</div>
+<span class="w-6 text-right">25°</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Air Quality & Details Grid -->
+<div class="grid grid-cols-2 gap-4">
+<!-- UV Index -->
+<div class="glass rounded-xl p-4 flex flex-col justify-between h-40">
+<div>
+<div class="flex items-center gap-2 mb-1 text-slate-400">
+<span class="material-icons-round text-sm">wb_sunny</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">UV Index</span>
+</div>
+<p class="text-2xl font-semibold">2</p>
+<p class="text-sm font-medium">Low</p>
+</div>
+<div class="w-full h-1.5 bg-slate-700/50 rounded-full relative mt-2 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400"></div>
+<div class="absolute left-[20%] top-0 w-1 h-full bg-white shadow-xl"></div>
+</div>
+<p class="text-[10px] text-slate-400 mt-2">Use sun protection until 4 PM.</p>
+</div>
+<!-- Sunset (Fixed Overlap) -->
+<div class="glass rounded-xl p-4 flex flex-col justify-between h-40">
+<div>
+<div class="flex items-center gap-2 mb-1 text-slate-400">
+<span class="material-icons-round text-sm">wb_twilight</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Sunset</span>
+</div>
+<p class="text-2xl font-semibold">8:04 PM</p>
+</div>
+<div class="mt-auto pb-1">
+<div class="h-8 border-b-2 border-slate-700 border-dashed relative">
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-14 h-14 border-2 border-primary rounded-full border-b-transparent opacity-50"></div>
+<span class="material-icons-round text-primary absolute bottom-[-8px] right-2 text-sm">wb_sunny</span>
+</div>
+<p class="text-[10px] text-slate-400 mt-3">Sunrise: 6:12 AM</p>
+</div>
+</div>
+<!-- Wind -->
+<div class="glass rounded-xl p-4 flex flex-col justify-between h-40">
+<div>
+<div class="flex items-center gap-2 mb-1 text-slate-400">
+<span class="material-icons-round text-sm">air</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Wind</span>
+</div>
+<div class="flex items-baseline gap-1">
+<p class="text-2xl font-semibold">12</p>
+<p class="text-sm font-medium text-slate-400">km/h</p>
+</div>
+</div>
+<div class="relative w-14 h-14 mx-auto mb-1">
+<div class="absolute inset-0 border-2 border-slate-700 rounded-full"></div>
+<div class="absolute inset-0 border-t-2 border-primary rounded-full rotate-45"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px] font-bold">NW</div>
+</div>
+</div>
+<!-- Humidity -->
+<div class="glass rounded-xl p-4 flex flex-col justify-between h-40">
+<div>
+<div class="flex items-center gap-2 mb-1 text-slate-400">
+<span class="material-icons-round text-sm">water_drop</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Humidity</span>
+</div>
+<p class="text-2xl font-semibold">64%</p>
+</div>
+<div class="mt-auto">
+<p class="text-[10px] text-slate-400">The dew point is 13° right now.</p>
+</div>
+</div>
+<!-- Visibility -->
+<div class="glass rounded-xl p-4 flex flex-col justify-between h-40">
+<div>
+<div class="flex items-center gap-2 mb-1 text-slate-400">
+<span class="material-icons-round text-sm">visibility</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Visibility</span>
+</div>
+<p class="text-2xl font-semibold">16 km</p>
+</div>
+<div class="mt-auto">
+<p class="text-[10px] text-slate-400">It's perfectly clear.</p>
+</div>
+</div>
+<!-- Pressure -->
+<div class="glass rounded-xl p-4 flex flex-col justify-between h-40">
+<div>
+<div class="flex items-center gap-2 mb-1 text-slate-400">
+<span class="material-icons-round text-sm">speed</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Pressure</span>
+</div>
+<p class="text-2xl font-semibold">1012</p>
+</div>
+<div class="mt-auto text-center pb-1">
+<div class="inline-flex items-center gap-1 text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded-full">
+<span class="material-icons-round text-xs">south</span>
+<span>Falling</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Map Section (Placeholder) -->
+<section class="glass rounded-xl p-4">
+<div class="flex items-center gap-2 mb-3 px-1 text-slate-400">
+<span class="material-icons-round text-sm">map</span>
+<span class="text-xs font-bold uppercase tracking-wider">Precipitation Map</span>
+</div>
+<div class="relative w-full aspect-video rounded-lg overflow-hidden bg-slate-800">
+<img alt="Weather Map" class="w-full h-full object-cover opacity-60 grayscale" data-alt="Satellite map of San Francisco area weather" data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJWgd4ajqpELbwAmAm25Ej8LMQRKE3Hhe-vJBkT8hhQlqwWBdBgK6Lnh4LPLrk2alJjdpA3VJ1OWsLFnguFQokoHzOmeiJ-E3_lAJub-ktxdFqbRnCd0dEiyAyoBI5sRb_UTB7h1nIEel8qzoxhxVPCmDAGL5hi8UZmCvVbVeOfIEtEobt143vvuPFqwp4JDaKFVFXKYJTQl4GWsrIKHv0cBMJ6L3LZQ-yMcH37bI6cK9g3CSxNqrdrp-slC7ZwfNqLIghkuRQlM0"/>
+<div class="absolute inset-0 bg-primary/20 mix-blend-overlay"></div>
+<div class="absolute top-2 right-2 bg-black/50 backdrop-blur-md text-[10px] font-bold px-2 py-1 rounded">
+                LIVE
+            </div>
+</div>
+</section>
+<!-- Footer Meta -->
+<footer class="text-center py-8 text-slate-500 text-xs">
+<p>Data provided by SkyCast Meteorologists</p>
+<p class="mt-1">Last updated: 12:45 PM</p>
+</footer>
+</div>
+<!-- Mobile Nav Bar (Simulated) -->
+<nav class="fixed bottom-0 left-0 right-0 glass border-t border-white/5 py-4 px-8 flex justify-between items-center z-50">
+<button class="text-primary">
+<span class="material-icons-round">list</span>
+</button>
+<div class="flex gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white/30"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white/30"></div>
+</div>
+<button class="text-white">
+<span class="material-icons-round">near_me</span>
+</button>
+</nav>
+<!-- Pulsing Active Indicator (Custom CSS component) -->
+<div class="fixed top-8 left-8 flex items-center gap-2 pointer-events-none opacity-50">
+<div class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Live Updates</span>
+</div>
+</body></html>
