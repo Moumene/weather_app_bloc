@@ -1,16 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 
 import '../../../domain/repositories/settings_repository.dart';
 
-part 'settings_event.dart';
-part 'settings_state.dart';
+import 'settings_event.dart';
+import 'settings_state.dart';
+
+export 'settings_event.dart';
+export 'settings_state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsBloc({
     required SettingsRepository settingsRepository,
   })  : _settingsRepo = settingsRepository,
-        super(const SettingsInitial()) {
+        super(const SettingsState.initial()) {
     on<SettingsLoadRequested>(_onLoadRequested);
     on<SettingsLanguageChanged>(_onLanguageChanged);
     on<SettingsUnitChanged>(_onUnitChanged);
@@ -22,12 +24,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     SettingsLoadRequested event,
     Emitter<SettingsState> emit,
   ) async {
-    emit(const SettingsLoading());
+    emit(const SettingsState.loading());
 
     final languageCode = await _settingsRepo.getLanguageCode();
     final useCelsius = await _settingsRepo.getUseCelsius();
 
-    emit(SettingsLoaded(
+    emit(SettingsState.loaded(
       languageCode: languageCode,
       useCelsius: useCelsius,
     ));
@@ -39,7 +41,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     await _settingsRepo.setLanguageCode(event.languageCode);
     final useCelsius = await _settingsRepo.getUseCelsius();
-    emit(SettingsLoaded(
+    emit(SettingsState.loaded(
       languageCode: event.languageCode,
       useCelsius: useCelsius,
     ));
@@ -51,7 +53,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   ) async {
     await _settingsRepo.setUseCelsius(event.useCelsius);
     final languageCode = await _settingsRepo.getLanguageCode();
-    emit(SettingsLoaded(
+    emit(SettingsState.loaded(
       languageCode: languageCode,
       useCelsius: event.useCelsius,
     ));

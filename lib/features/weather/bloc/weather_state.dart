@@ -1,40 +1,19 @@
-part of 'weather_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class WeatherState extends Equatable {
-  const WeatherState();
+import '../../../core/errors/weather_failure.dart';
+import '../../../domain/models/forecast_model.dart';
+import '../../../domain/models/weather_model.dart';
 
-  @override
-  List<Object?> get props => [];
-}
+part 'weather_state.freezed.dart';
 
-class WeatherInitial extends WeatherState {
-  const WeatherInitial();
-}
-
-class WeatherLoading extends WeatherState {
-  const WeatherLoading();
-}
-
-class WeatherLoaded extends WeatherState {
-  const WeatherLoaded({
-    required this.weather,
-    required this.forecast,
-    this.useCelsius = true,
-  });
-
-  final WeatherModel weather;
-  final List<ForecastModel> forecast;
-  final bool useCelsius;
-
-  @override
-  List<Object?> get props => [weather, forecast, useCelsius];
-}
-
-class WeatherError extends WeatherState {
-  const WeatherError(this.failure);
-
-  final WeatherFailure failure;
-
-  @override
-  List<Object?> get props => [failure];
+@freezed
+sealed class WeatherState with _$WeatherState {
+  const factory WeatherState.initial() = WeatherInitial;
+  const factory WeatherState.loading() = WeatherLoading;
+  const factory WeatherState.loaded({
+    required WeatherModel weather,
+    required List<ForecastModel> forecast,
+    @Default(true) bool useCelsius,
+  }) = WeatherLoaded;
+  const factory WeatherState.error(WeatherFailure failure) = WeatherError;
 }

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 
 import '../../../core/errors/weather_failure.dart';
 import '../../../domain/models/forecast_model.dart';
@@ -7,8 +6,11 @@ import '../../../domain/models/weather_model.dart';
 import '../../../domain/repositories/weather_repository.dart';
 import '../../../domain/repositories/settings_repository.dart';
 
-part 'weather_event.dart';
-part 'weather_state.dart';
+import 'weather_event.dart';
+import 'weather_state.dart';
+
+export 'weather_event.dart';
+export 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc({
@@ -16,7 +18,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     required SettingsRepository settingsRepository,
   })  : _weatherRepo = weatherRepository,
         _settingsRepo = settingsRepository,
-        super(const WeatherInitial()) {
+        super(const WeatherState.initial()) {
     on<WeatherLoadRequested>(_onLoadRequested);
     on<WeatherRefreshRequested>(_onRefreshRequested);
     on<WeatherLocationSelected>(_onLocationSelected);
@@ -34,7 +36,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     WeatherLoadRequested event,
     Emitter<WeatherState> emit,
   ) async {
-    emit(const WeatherLoading());
+    emit(const WeatherState.loading());
 
     try {
       final lang = await _settingsRepo.getLanguageCode();
@@ -88,16 +90,16 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
       if (weather != null) {
         final useCelsius = await _settingsRepo.getUseCelsius();
-        emit(WeatherLoaded(
+        emit(WeatherState.loaded(
           weather: weather,
           forecast: forecast,
           useCelsius: useCelsius,
         ));
       } else {
-        emit(const WeatherInitial());
+        emit(const WeatherState.initial());
       }
     } on WeatherFailure catch (e) {
-      emit(WeatherError(e));
+      emit(WeatherState.error(e));
     }
   }
 
@@ -107,7 +109,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   ) async {
     final current = state;
     if (current is WeatherLoaded) {
-      add(const WeatherLoadRequested());
+      add(const WeatherEvent.loadRequested());
     }
   }
 
@@ -122,7 +124,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     await _settingsRepo.setLastCoordinates(event.lat, event.lon);
     await _settingsRepo.setLastCityName(event.cityName);
 
-    add(const WeatherLoadRequested());
+    add(const WeatherEvent.loadRequested());
   }
 
   void _onUnitsChanged(
@@ -131,7 +133,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   ) {
     final current = state;
     if (current is WeatherLoaded) {
-      emit(WeatherLoaded(
+      emit(WeatherState.loaded(
         weather: current.weather,
         forecast: current.forecast,
         useCelsius: event.useCelsius,
