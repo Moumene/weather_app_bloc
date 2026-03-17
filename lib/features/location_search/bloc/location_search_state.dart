@@ -1,8 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../domain/models/location_model.dart';
-
-part 'location_search_state.freezed.dart';
+part of 'location_search_bloc.dart';
 
 @freezed
 sealed class LocationSearchState with _$LocationSearchState {

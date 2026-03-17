@@ -1,24 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../core/errors/weather_failure.dart';
-import '../../../domain/models/forecast_model.dart';
-import '../../../domain/models/weather_model.dart';
-import '../../../domain/repositories/weather_repository.dart';
+import '../../../domain/models/forcast/forecast_model.dart';
+import '../../../domain/models/weather/weather_model.dart';
 import '../../../domain/repositories/settings_repository.dart';
+import '../../../domain/repositories/weather_repository.dart';
 
-import 'weather_event.dart';
-import 'weather_state.dart';
-
-export 'weather_event.dart';
-export 'weather_state.dart';
+part 'weather_bloc.freezed.dart';
+part 'weather_event.dart';
+part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc({
     required WeatherRepository weatherRepository,
     required SettingsRepository settingsRepository,
-  })  : _weatherRepo = weatherRepository,
-        _settingsRepo = settingsRepository,
-        super(const WeatherState.initial()) {
+  }) : _weatherRepo = weatherRepository,
+       _settingsRepo = settingsRepository,
+       super(const WeatherState.initial()) {
     on<WeatherLoadRequested>(_onLoadRequested);
     on<WeatherRefreshRequested>(_onRefreshRequested);
     on<WeatherLocationSelected>(_onLocationSelected);
@@ -90,11 +88,13 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
 
       if (weather != null) {
         final useCelsius = await _settingsRepo.getUseCelsius();
-        emit(WeatherState.loaded(
-          weather: weather,
-          forecast: forecast,
-          useCelsius: useCelsius,
-        ));
+        emit(
+          WeatherState.loaded(
+            weather: weather,
+            forecast: forecast,
+            useCelsius: useCelsius,
+          ),
+        );
       } else {
         emit(const WeatherState.initial());
       }
@@ -127,27 +127,21 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     add(const WeatherEvent.loadRequested());
   }
 
-  void _onUnitsChanged(
-    WeatherUnitsChanged event,
-    Emitter<WeatherState> emit,
-  ) {
+  void _onUnitsChanged(WeatherUnitsChanged event, Emitter<WeatherState> emit) {
     final current = state;
     if (current is WeatherLoaded) {
-      emit(WeatherState.loaded(
-        weather: current.weather,
-        forecast: current.forecast,
-        useCelsius: event.useCelsius,
-      ));
+      emit(
+        WeatherState.loaded(
+          weather: current.weather,
+          forecast: current.forecast,
+          useCelsius: event.useCelsius,
+        ),
+      );
     }
   }
 
   String _toOpenWeatherLang(String code) {
-    const map = {
-      'en': 'en',
-      'fr': 'fr',
-      'es': 'es',
-      'it': 'it',
-    };
+    const map = {'en': 'en', 'fr': 'fr', 'es': 'es', 'it': 'it'};
     return map[code] ?? 'en';
   }
 }

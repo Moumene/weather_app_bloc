@@ -1,10 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../core/errors/weather_failure.dart';
-import '../../../domain/models/forecast_model.dart';
-import '../../../domain/models/weather_model.dart';
-
-part 'weather_state.freezed.dart';
+part of 'weather_bloc.dart';
 
 @freezed
 sealed class WeatherState with _$WeatherState {

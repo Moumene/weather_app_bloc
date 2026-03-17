@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
-import '../../domain/models/forecast_model.dart';
-import '../../domain/models/daily_forecast_model.dart';
+import '../../domain/models/forcast/forecast_model.dart';
+import '../../domain/models/daily_forecast/daily_forecast_model.dart';
 
 /// Groups hourly forecast into daily forecasts (min/max per day)
 List<DailyForecastModel> groupForecastByDay(List<ForecastModel> forecast) {

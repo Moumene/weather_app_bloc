@@ -9,7 +9,12 @@ sealed class WeatherFailure extends Equatable {
 }
 
 class WeatherFailureNetwork extends WeatherFailure {
-  const WeatherFailureNetwork();
+  final Object? error;
+
+  const WeatherFailureNetwork([this.error]);
+
+  @override
+  List<Object?> get props => [error];
 }
 
 class WeatherFailureNotFound extends WeatherFailure {

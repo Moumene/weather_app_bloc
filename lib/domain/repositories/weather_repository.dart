@@ -1,6 +1,6 @@
-import '../models/forecast_model.dart';
-import '../models/location_model.dart';
-import '../models/weather_model.dart';
+import '../models/forcast/forecast_model.dart';
+import '../models/location/location_model.dart';
+import '../models/weather/weather_model.dart';
 
 abstract class WeatherRepository {
   Future<List<LocationModel>> searchLocations(String query);

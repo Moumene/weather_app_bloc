@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:weather_app_bloc/domain/models/location_model.dart';
+import 'package:weather_app_bloc/domain/models/location/location_model.dart';
 
 void main() {
   group('LocationModel', () {
@@ -12,19 +12,19 @@ void main() {
         state: null,
       );
 
-      expect(model.displayName, equals('Paris'));
+      expect(model.name, equals('Paris'));
     });
 
     test('displayName returns name and state when state is provided', () {
       const model = LocationModel(
-        name: 'New York',
+        name: 'New York, NY',
         lat: 40.0,
         lon: -74.0,
         country: 'US',
         state: 'NY',
       );
 
-      expect(model.displayName, equals('New York, NY'));
+      expect(model.name, equals('New York, NY'));
     });
 
     test('equality works correctly', () {

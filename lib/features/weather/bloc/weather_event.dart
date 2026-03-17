@@ -1,6 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'weather_event.freezed.dart';
+part of 'weather_bloc.dart';
 
 @freezed
 sealed class WeatherEvent with _$WeatherEvent {

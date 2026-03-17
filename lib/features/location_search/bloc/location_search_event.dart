@@ -1,6 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'location_search_event.freezed.dart';
+part of 'location_search_bloc.dart';
 
 @freezed
 sealed class LocationSearchEvent with _$LocationSearchEvent {

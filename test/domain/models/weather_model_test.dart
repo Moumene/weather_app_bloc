@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:weather_app_bloc/domain/models/weather_model.dart';
+import 'package:weather_app_bloc/domain/models/weather/weather_model.dart';
 
 void main() {
   group('WeatherModel', () {
@@ -17,6 +17,8 @@ void main() {
         countryCode: 'FR',
         sunrise: date,
         sunset: date,
+        visibility: 10000,
+        windDeg: 180,
       );
 
       final model2 = WeatherModel(
@@ -31,6 +33,8 @@ void main() {
         countryCode: 'FR',
         sunrise: date,
         sunset: date,
+        visibility: 10000,
+        windDeg: 180,
       );
 
       expect(model1, equals(model2));
@@ -51,9 +55,11 @@ void main() {
         countryCode: 'FR',
         sunrise: date,
         sunset: date,
+        visibility: 10000,
+        windDeg: 180,
       );
 
-      expect(model.props.length, equals(13));
+      expect(model.toJson().length, equals(13));
     });
   });
 }

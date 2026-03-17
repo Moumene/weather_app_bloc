@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:weather_app_bloc/domain/models/location_model.dart';
+import 'package:weather_app_bloc/domain/models/location/location_model.dart';
 import 'package:weather_app_bloc/domain/repositories/weather_repository.dart';
 import 'package:weather_app_bloc/features/location_search/bloc/location_search_bloc.dart';
 
@@ -35,27 +35,25 @@ void main() {
     blocTest<LocationSearchBloc, LocationSearchState>(
       'emits [LocationSearchLoading, LocationSearchLoaded] when search succeeds',
       build: () {
-        when(() => mockWeatherRepo.searchLocations(any())).thenAnswer((_) async => tLocations);
+        when(
+          () => mockWeatherRepo.searchLocations(any()),
+        ).thenAnswer((_) async => tLocations);
         return LocationSearchBloc(weatherRepository: mockWeatherRepo);
       },
       act: (bloc) => bloc.add(const LocationSearchQueryChanged(query: 'Paris')),
-      expect: () => [
-        LocationSearchLoading(),
-        LocationSearchLoaded(tLocations),
-      ],
+      expect: () => [LocationSearchLoading(), LocationSearchLoaded(tLocations)],
     );
 
     blocTest<LocationSearchBloc, LocationSearchState>(
       'emits [LocationSearchLoading, LocationSearchFailure] when search fails',
       build: () {
-        when(() => mockWeatherRepo.searchLocations(any())).thenThrow(Exception());
+        when(
+          () => mockWeatherRepo.searchLocations(any()),
+        ).thenThrow(Exception());
         return LocationSearchBloc(weatherRepository: mockWeatherRepo);
       },
       act: (bloc) => bloc.add(const LocationSearchQueryChanged(query: 'Paris')),
-      expect: () => [
-        LocationSearchLoading(),
-        LocationSearchFailure(),
-      ],
+      expect: () => [LocationSearchLoading(), LocationSearchFailure()],
     );
 
     blocTest<LocationSearchBloc, LocationSearchState>(

@@ -37,6 +37,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   equatable: ^2.0.5
   freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
   http: ^1.2.2
   geolocator: ^14.0.2
   shared_preferences: ^2.3.3
@@ -52,6 +53,7 @@ dev_dependencies:
   mocktail: ^1.0.4
   build_runner: ^2.4.9
   freezed: ^3.2.5
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -8,9 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../core/errors/weather_failure.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/forecast_utils.dart';
-import '../../../domain/models/daily_forecast_model.dart';
-import '../../../domain/models/forecast_model.dart';
-import '../../../domain/models/weather_model.dart';
+import '../../../domain/models/daily_forecast/daily_forecast_model.dart';
+import '../../../domain/models/forcast/forecast_model.dart';
+import '../../../domain/models/weather/weather_model.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../home/screens/home_shell_scope.dart';
 import '../bloc/weather_bloc.dart';
@@ -375,6 +375,8 @@ class WeatherDashboardScreen extends StatelessWidget {
       message = l10n.locationDisabled;
     } else if (failure is WeatherFailureNotFound) {
       message = l10n.noResults;
+    } else {
+      message = failure.props.firstOrNull?.toString() ?? l10n.error;
     }
 
     return Container(

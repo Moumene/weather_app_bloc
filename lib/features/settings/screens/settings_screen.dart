@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/theme/app_theme.dart';
-import '../bloc/settings_bloc.dart';
-import '../../location_search/bloc/location_search_bloc.dart';
-import '../../weather/bloc/weather_bloc.dart';
-import '../../../domain/models/location_model.dart';
+import '../../../domain/models/location/location_model.dart';
 import '../../../domain/repositories/weather_repository.dart';
 import '../../home/screens/home_shell_scope.dart';
+import '../../location_search/bloc/location_search_bloc.dart';
+import '../../weather/bloc/weather_bloc.dart';
+import '../bloc/settings_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -48,7 +48,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           if (state is! SettingsLoaded) {
             return Container(
               color: AppColors.backgroundDark,
-              child: const Center(child: CircularProgressIndicator(color: Colors.white)),
+              child: const Center(
+                child: CircularProgressIndicator(color: Colors.white),
+              ),
             );
           }
           return _buildContent(context, state);
@@ -102,7 +104,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     decoration: InputDecoration(
                       hintText: 'Search for a city or airport',
                       hintStyle: GoogleFonts.inter(color: Colors.white54),
-                      prefixIcon: const Icon(Icons.search, color: Colors.white54),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.white54,
+                      ),
                       filled: true,
                       fillColor: Colors.white.withValues(alpha: 0.08),
                       border: OutlineInputBorder(
@@ -113,8 +118,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: GoogleFonts.inter(color: Colors.white),
                     onChanged: (value) {
                       context.read<LocationSearchBloc>().add(
-                            LocationSearchQueryChanged(query: value),
-                          );
+                        LocationSearchQueryChanged(query: value),
+                      );
                     },
                   ),
                 ],
@@ -132,17 +137,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       builder: (context, searchState) {
                         return switch (searchState) {
                           LocationSearchLoading() => const Padding(
-                              padding: EdgeInsets.all(24),
-                              child: Center(
-                                child: CircularProgressIndicator(color: Colors.white),
+                            padding: EdgeInsets.all(24),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
                               ),
                             ),
-                          LocationSearchLoaded(:final locations) => locations.isEmpty
-                              ? _buildSavedLocationsPlaceholder(context)
-                              : _LocationList(
-                                  locations: locations,
-                                  onSelect: (loc) => _selectLocation(context, loc),
-                                ),
+                          ),
+                          LocationSearchLoaded(:final locations) =>
+                            locations.isEmpty
+                                ? _buildSavedLocationsPlaceholder(context)
+                                : _LocationList(
+                                    locations: locations,
+                                    onSelect: (loc) =>
+                                        _selectLocation(context, loc),
+                                  ),
                           _ => _buildSavedLocationsPlaceholder(context),
                         };
                       },
@@ -167,11 +176,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             useCelsius: state.useCelsius,
                             onChanged: (useCelsius) {
                               context.read<SettingsBloc>().add(
-                                    SettingsUnitChanged(useCelsius: useCelsius),
-                                  );
+                                SettingsUnitChanged(useCelsius: useCelsius),
+                              );
                               context.read<WeatherBloc>().add(
-                                    WeatherUnitsChanged(useCelsius: useCelsius),
-                                  );
+                                WeatherUnitsChanged(useCelsius: useCelsius),
+                              );
                             },
                           ),
                         ),
@@ -209,7 +218,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   color: Colors.white54,
                                 ),
                               ),
-                              const Icon(Icons.chevron_right, color: Colors.white54),
+                              const Icon(
+                                Icons.chevron_right,
+                                color: Colors.white54,
+                              ),
                             ],
                           ),
                           onTap: () => _showLanguageSheet(context, state),
@@ -230,12 +242,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       children: [
                         _SettingsRow(
                           label: 'Privacy Policy',
-                          trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 20),
+                          trailing: const Icon(
+                            Icons.open_in_new,
+                            color: Colors.white54,
+                            size: 20,
+                          ),
                         ),
                         _SettingsDivider(),
                         _SettingsRow(
                           label: 'Terms of Service',
-                          trailing: const Icon(Icons.open_in_new, color: Colors.white54, size: 20),
+                          trailing: const Icon(
+                            Icons.open_in_new,
+                            color: Colors.white54,
+                            size: 20,
+                          ),
                         ),
                       ],
                     ),
@@ -278,12 +298,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _selectLocation(BuildContext context, LocationModel loc) {
     context.read<WeatherBloc>().add(
-          WeatherLocationSelected(
-            lat: loc.lat,
-            lon: loc.lon,
-            cityName: loc.displayName,
-          ),
-        );
+      WeatherLocationSelected(lat: loc.lat, lon: loc.lon, cityName: loc.name),
+    );
     HomeShellScope.of(context)?.onSwitchToTab(0);
   }
 
@@ -294,30 +310,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: ['en', 'fr', 'es', 'it']
-              .map((code) {
-                final name = _languageName(code);
-                return ListTile(
-                  title: Text(name, style: GoogleFonts.inter(color: Colors.white)),
-                  trailing: state.languageCode == code
-                      ? const Icon(Icons.check, color: AppColors.primary)
-                      : null,
-                  onTap: () {
-                    context.read<SettingsBloc>().add(
-                          SettingsLanguageChanged(languageCode: code),
-                        );
-                    Navigator.pop(context);
-                  },
+          children: ['en', 'fr', 'es', 'it'].map((code) {
+            final name = _languageName(code);
+            return ListTile(
+              title: Text(name, style: GoogleFonts.inter(color: Colors.white)),
+              trailing: state.languageCode == code
+                  ? const Icon(Icons.check, color: AppColors.primary)
+                  : null,
+              onTap: () {
+                context.read<SettingsBloc>().add(
+                  SettingsLanguageChanged(languageCode: code),
                 );
-              })
-              .toList(),
+                Navigator.pop(context);
+              },
+            );
+          }).toList(),
         ),
       ),
     );
   }
 
   String _languageName(String code) {
-    const names = {'en': 'English', 'fr': 'Français', 'es': 'Español', 'it': 'Italiano'};
+    const names = {
+      'en': 'English',
+      'fr': 'Français',
+      'es': 'Español',
+      'it': 'Italiano',
+    };
     return names[code] ?? code;
   }
 }
@@ -461,8 +480,8 @@ class _SettingsRow extends StatelessWidget {
                 ),
               ),
             ),
-            if (child != null) child!,
-            if (trailing != null) trailing!,
+            ?child,
+            ?trailing,
           ],
         ),
       ),
@@ -484,10 +503,7 @@ class _SettingsDivider extends StatelessWidget {
 }
 
 class _UnitToggle extends StatelessWidget {
-  const _UnitToggle({
-    required this.useCelsius,
-    required this.onChanged,
-  });
+  const _UnitToggle({required this.useCelsius, required this.onChanged});
 
   final bool useCelsius;
   final void Function(bool) onChanged;
@@ -539,7 +555,9 @@ class _UnitButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primary : Colors.transparent,
           borderRadius: BorderRadius.circular(6),
-          boxShadow: isSelected ? [BoxShadow(color: Colors.black26, blurRadius: 2)] : null,
+          boxShadow: isSelected
+              ? [BoxShadow(color: Colors.black26, blurRadius: 2)]
+              : null,
         ),
         child: Text(
           label,
@@ -555,10 +573,7 @@ class _UnitButton extends StatelessWidget {
 }
 
 class _LocationList extends StatelessWidget {
-  const _LocationList({
-    required this.locations,
-    required this.onSelect,
-  });
+  const _LocationList({required this.locations, required this.onSelect});
 
   final List<LocationModel> locations;
   final void Function(LocationModel) onSelect;
@@ -577,49 +592,51 @@ class _LocationList extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        ...locations.map((loc) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Material(
-                color: Colors.white.withValues(alpha: 0.08),
+        ...locations.map(
+          (loc) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Material(
+              color: Colors.white.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(16),
+              child: InkWell(
+                onTap: () => onSelect(loc),
                 borderRadius: BorderRadius.circular(16),
-                child: InkWell(
-                  onTap: () => onSelect(loc),
-                  borderRadius: BorderRadius.circular(16),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.location_on, color: AppColors.primary),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                loc.displayName,
-                                style: GoogleFonts.inter(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.location_on, color: AppColors.primary),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              loc.name,
+                              style: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
-                              Text(
-                                loc.country,
-                                style: GoogleFonts.inter(
-                                  fontSize: 14,
-                                  color: Colors.white54,
-                                ),
+                            ),
+                            Text(
+                              loc.country,
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                color: Colors.white54,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        const Icon(Icons.chevron_right, color: Colors.white54),
-                      ],
-                    ),
+                      ),
+                      const Icon(Icons.chevron_right, color: Colors.white54),
+                    ],
                   ),
                 ),
               ),
-            )),
+            ),
+          ),
+        ),
       ],
     );
   }
