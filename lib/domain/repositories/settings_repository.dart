@@ -7,6 +7,10 @@ abstract class SettingsRepository {
 
   Future<void> setLastCityName(String cityName);
 
+  Future<String> getLastCountryCode();
+
+  Future<void> setLastCountryCode(String countryCode);
+
   Future<double?> getLastLat();
 
   Future<double?> getLastLon();

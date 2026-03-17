@@ -8,6 +8,7 @@ sealed class WeatherEvent with _$WeatherEvent {
     required double lat,
     required double lon,
     required String cityName,
+    String? countryCode,
   }) = WeatherLocationSelected;
   const factory WeatherEvent.unitsChanged({required bool useCelsius}) =
       WeatherUnitsChanged;

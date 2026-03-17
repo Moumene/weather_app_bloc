@@ -9,6 +9,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
 
   static const _keyLanguage = 'language_code';
   static const _keyLastCity = 'last_city_name';
+  static const _keyLastCountry = 'last_country_code';
   static const _keyLastLat = 'last_lat';
   static const _keyLastLon = 'last_lon';
   static const _keyUseCelsius = 'use_celsius';
@@ -38,6 +39,18 @@ class SettingsRepositoryImpl implements SettingsRepository {
   Future<void> setLastCityName(String cityName) async {
     final prefs = await _storage;
     await prefs.setString(_keyLastCity, cityName);
+  }
+
+  @override
+  Future<String> getLastCountryCode() async {
+    final prefs = await _storage;
+    return prefs.getString(_keyLastCountry) ?? '';
+  }
+
+  @override
+  Future<void> setLastCountryCode(String countryCode) async {
+    final prefs = await _storage;
+    await prefs.setString(_keyLastCountry, countryCode);
   }
 
   @override

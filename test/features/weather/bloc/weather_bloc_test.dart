@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:weather_app_bloc/core/errors/weather_failure.dart';
+import 'package:weather_app_bloc/domain/models/daily_forecast/daily_forecast_model.dart';
 import 'package:weather_app_bloc/domain/models/forcast/forecast_model.dart';
 import 'package:weather_app_bloc/domain/models/weather/weather_model.dart';
 import 'package:weather_app_bloc/domain/repositories/settings_repository.dart';
@@ -44,6 +45,17 @@ void main() {
     ),
   ];
 
+  final tDailyForecast = [
+    DailyForecastModel(
+      date: DateTime(2025, 1, 1),
+      dayName: 'Today',
+      minTemp: 18.0,
+      maxTemp: 26.0,
+      iconCode: '01d',
+      description: 'clear',
+    ),
+  ];
+
   setUp(() {
     mockWeatherRepo = MockWeatherRepository();
     mockSettingsRepo = MockSettingsRepository();
@@ -62,12 +74,17 @@ void main() {
           () => mockSettingsRepo.getLastCityName(),
         ).thenAnswer((_) async => '');
         when(
+          () => mockSettingsRepo.getLastCountryCode(),
+        ).thenAnswer((_) async => '');
+        when(
           () => mockSettingsRepo.getUseCelsius(),
         ).thenAnswer((_) async => true);
         when(
           () => mockWeatherRepo.getCurrentWeather(
             lat: any(named: 'lat'),
             lon: any(named: 'lon'),
+            cityName: any(named: 'cityName'),
+            countryCode: any(named: 'countryCode'),
             lang: any(named: 'lang'),
           ),
         ).thenAnswer((_) async => tWeather);
@@ -78,6 +95,13 @@ void main() {
             lang: any(named: 'lang'),
           ),
         ).thenAnswer((_) async => tForecast);
+        when(
+          () => mockWeatherRepo.getDailyForecast(
+            lat: any(named: 'lat'),
+            lon: any(named: 'lon'),
+            lang: any(named: 'lang'),
+          ),
+        ).thenAnswer((_) async => tDailyForecast);
         return WeatherBloc(
           weatherRepository: mockWeatherRepo,
           settingsRepository: mockSettingsRepo,
@@ -86,7 +110,12 @@ void main() {
       act: (bloc) => bloc.add(const WeatherLoadRequested()),
       expect: () => [
         WeatherLoading(),
-        WeatherLoaded(weather: tWeather, forecast: tForecast, useCelsius: true),
+        WeatherLoaded(
+          weather: tWeather,
+          forecast: tForecast,
+          dailyForecast: tDailyForecast,
+          useCelsius: true,
+        ),
       ],
     );
 
@@ -102,9 +131,14 @@ void main() {
           () => mockSettingsRepo.getLastCityName(),
         ).thenAnswer((_) async => '');
         when(
+          () => mockSettingsRepo.getLastCountryCode(),
+        ).thenAnswer((_) async => '');
+        when(
           () => mockWeatherRepo.getCurrentWeather(
             lat: any(named: 'lat'),
             lon: any(named: 'lon'),
+            cityName: any(named: 'cityName'),
+            countryCode: any(named: 'countryCode'),
             lang: any(named: 'lang'),
           ),
         ).thenThrow(const WeatherFailureNetwork());
@@ -136,9 +170,14 @@ void main() {
           () => mockSettingsRepo.setLastCityName(any()),
         ).thenAnswer((_) async {});
         when(
+          () => mockSettingsRepo.setLastCountryCode(any()),
+        ).thenAnswer((_) async {});
+        when(
           () => mockWeatherRepo.getCurrentWeather(
             lat: any(named: 'lat'),
             lon: any(named: 'lon'),
+            cityName: any(named: 'cityName'),
+            countryCode: any(named: 'countryCode'),
             lang: any(named: 'lang'),
           ),
         ).thenAnswer((_) async => tWeather);
@@ -149,17 +188,34 @@ void main() {
             lang: any(named: 'lang'),
           ),
         ).thenAnswer((_) async => tForecast);
+        when(
+          () => mockWeatherRepo.getDailyForecast(
+            lat: any(named: 'lat'),
+            lon: any(named: 'lon'),
+            lang: any(named: 'lang'),
+          ),
+        ).thenAnswer((_) async => tDailyForecast);
         return WeatherBloc(
           weatherRepository: mockWeatherRepo,
           settingsRepository: mockSettingsRepo,
         );
       },
       act: (bloc) => bloc.add(
-        const WeatherLocationSelected(lat: 48.0, lon: 2.0, cityName: 'Paris'),
+        const WeatherLocationSelected(
+          lat: 48.0,
+          lon: 2.0,
+          cityName: 'Paris',
+          countryCode: 'FR',
+        ),
       ),
       expect: () => [
         WeatherLoading(),
-        WeatherLoaded(weather: tWeather, forecast: tForecast, useCelsius: true),
+        WeatherLoaded(
+          weather: tWeather,
+          forecast: tForecast,
+          dailyForecast: tDailyForecast,
+          useCelsius: true,
+        ),
       ],
     );
 
@@ -174,6 +230,7 @@ void main() {
       seed: () => WeatherLoaded(
         weather: tWeather,
         forecast: tForecast,
+        dailyForecast: tDailyForecast,
         useCelsius: true,
       ),
       act: (bloc) => bloc.add(const WeatherUnitsChanged(useCelsius: false)),
@@ -181,6 +238,7 @@ void main() {
         WeatherLoaded(
           weather: tWeather,
           forecast: tForecast,
+          dailyForecast: tDailyForecast,
           useCelsius: false,
         ),
       ],

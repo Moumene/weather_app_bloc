@@ -298,7 +298,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _selectLocation(BuildContext context, LocationModel loc) {
     context.read<WeatherBloc>().add(
-      WeatherLocationSelected(lat: loc.lat, lon: loc.lon, cityName: loc.name),
+      WeatherLocationSelected(
+        lat: loc.lat,
+        lon: loc.lon,
+        cityName: loc.name,
+        countryCode: loc.country,
+      ),
     );
     HomeShellScope.of(context)?.onSwitchToTab(0);
   }

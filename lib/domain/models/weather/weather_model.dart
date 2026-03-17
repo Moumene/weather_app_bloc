@@ -17,8 +17,10 @@ abstract class WeatherModel with _$WeatherModel {
     @JsonKey(name: 'icon_code') required String iconCode,
     @JsonKey(name: 'city_name') required String cityName,
     @JsonKey(name: 'country_code') required String countryCode,
-    @JsonKey(name: 'sunrise') required DateTime sunrise,
-    @JsonKey(name: 'sunset') required DateTime sunset,
+    @JsonKey(name: 'sunrise') DateTime? sunrise,
+    @JsonKey(name: 'sunset') DateTime? sunset,
+    @JsonKey(name: 'timezone_offset') int? timezoneOffset,
+    @JsonKey(name: 'uvi') double? uvi,
   }) = _WeatherModel;
 
   factory WeatherModel.fromJson(Map<String, dynamic> json) =>

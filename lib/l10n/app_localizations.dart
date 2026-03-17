@@ -42,6 +42,7 @@ class AppLocalizations {
       'steady': 'Steady',
       'hourlyForecast': 'Hourly Forecast',
       'tenDayForecast': '10-Day Forecast',
+      'eightDayForecast': '8-Day Forecast',
       'sunset': 'Sunset',
     },
     'fr': {
@@ -69,6 +70,7 @@ class AppLocalizations {
       'steady': 'Stable',
       'hourlyForecast': 'Prévisions horaires',
       'tenDayForecast': 'Prévisions 10 jours',
+      'eightDayForecast': 'Prévisions 8 jours',
       'sunset': 'Coucher du soleil',
     },
     'es': {
@@ -96,6 +98,7 @@ class AppLocalizations {
       'steady': 'Estable',
       'hourlyForecast': 'Pronóstico horario',
       'tenDayForecast': 'Pronóstico 10 días',
+      'eightDayForecast': 'Pronóstico 8 días',
       'sunset': 'Atardecer',
     },
     'it': {
@@ -123,6 +126,7 @@ class AppLocalizations {
       'steady': 'Stabile',
       'hourlyForecast': 'Previsioni orarie',
       'tenDayForecast': 'Previsioni 10 giorni',
+      'eightDayForecast': 'Previsioni 8 giorni',
       'sunset': 'Tramonto',
     },
   };
@@ -151,6 +155,7 @@ class AppLocalizations {
   String get steady => _translate('steady');
   String get hourlyForecast => _translate('hourlyForecast');
   String get tenDayForecast => _translate('tenDayForecast');
+  String get eightDayForecast => _translate('eightDayForecast');
   String get sunset => _translate('sunset');
 
   String _translate(String key) {

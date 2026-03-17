@@ -59,7 +59,7 @@ void main() {
         windDeg: 180,
       );
 
-      expect(model.toJson().length, equals(13));
+      expect(model.toJson().length, equals(15));
     });
   });
 }

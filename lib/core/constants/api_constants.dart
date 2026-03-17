@@ -7,6 +7,7 @@ class ApiConstants {
 
   static const String baseUrl = 'https://api.openweathermap.org';
   static const String dataPath = '/data/2.5';
+  static const String oneCallPath = '/data/3.0/onecall';
   static const String geoPath = '/geo/1.0';
 
   /// API key from .env (OPENWEATHER_API_KEY) or --dart-define=OPENWEATHER_API_KEY

@@ -125,12 +125,12 @@ return unitsChanged(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadRequested,TResult Function()?  refreshRequested,TResult Function( double lat,  double lon,  String cityName)?  locationSelected,TResult Function( bool useCelsius)?  unitsChanged,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loadRequested,TResult Function()?  refreshRequested,TResult Function( double lat,  double lon,  String cityName,  String? countryCode)?  locationSelected,TResult Function( bool useCelsius)?  unitsChanged,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case WeatherLoadRequested() when loadRequested != null:
 return loadRequested();case WeatherRefreshRequested() when refreshRequested != null:
 return refreshRequested();case WeatherLocationSelected() when locationSelected != null:
-return locationSelected(_that.lat,_that.lon,_that.cityName);case WeatherUnitsChanged() when unitsChanged != null:
+return locationSelected(_that.lat,_that.lon,_that.cityName,_that.countryCode);case WeatherUnitsChanged() when unitsChanged != null:
 return unitsChanged(_that.useCelsius);case _:
   return orElse();
 
@@ -149,12 +149,12 @@ return unitsChanged(_that.useCelsius);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadRequested,required TResult Function()  refreshRequested,required TResult Function( double lat,  double lon,  String cityName)  locationSelected,required TResult Function( bool useCelsius)  unitsChanged,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loadRequested,required TResult Function()  refreshRequested,required TResult Function( double lat,  double lon,  String cityName,  String? countryCode)  locationSelected,required TResult Function( bool useCelsius)  unitsChanged,}) {final _that = this;
 switch (_that) {
 case WeatherLoadRequested():
 return loadRequested();case WeatherRefreshRequested():
 return refreshRequested();case WeatherLocationSelected():
-return locationSelected(_that.lat,_that.lon,_that.cityName);case WeatherUnitsChanged():
+return locationSelected(_that.lat,_that.lon,_that.cityName,_that.countryCode);case WeatherUnitsChanged():
 return unitsChanged(_that.useCelsius);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -169,12 +169,12 @@ return unitsChanged(_that.useCelsius);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadRequested,TResult? Function()?  refreshRequested,TResult? Function( double lat,  double lon,  String cityName)?  locationSelected,TResult? Function( bool useCelsius)?  unitsChanged,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loadRequested,TResult? Function()?  refreshRequested,TResult? Function( double lat,  double lon,  String cityName,  String? countryCode)?  locationSelected,TResult? Function( bool useCelsius)?  unitsChanged,}) {final _that = this;
 switch (_that) {
 case WeatherLoadRequested() when loadRequested != null:
 return loadRequested();case WeatherRefreshRequested() when refreshRequested != null:
 return refreshRequested();case WeatherLocationSelected() when locationSelected != null:
-return locationSelected(_that.lat,_that.lon,_that.cityName);case WeatherUnitsChanged() when unitsChanged != null:
+return locationSelected(_that.lat,_that.lon,_that.cityName,_that.countryCode);case WeatherUnitsChanged() when unitsChanged != null:
 return unitsChanged(_that.useCelsius);case _:
   return null;
 
@@ -251,12 +251,13 @@ String toString() {
 
 
 class WeatherLocationSelected implements WeatherEvent {
-  const WeatherLocationSelected({required this.lat, required this.lon, required this.cityName});
+  const WeatherLocationSelected({required this.lat, required this.lon, required this.cityName, this.countryCode});
   
 
  final  double lat;
  final  double lon;
  final  String cityName;
+ final  String? countryCode;
 
 /// Create a copy of WeatherEvent
 /// with the given fields replaced by the non-null parameter values.
@@ -268,16 +269,16 @@ $WeatherLocationSelectedCopyWith<WeatherLocationSelected> get copyWith => _$Weat
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WeatherLocationSelected&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.cityName, cityName) || other.cityName == cityName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WeatherLocationSelected&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.cityName, cityName) || other.cityName == cityName)&&(identical(other.countryCode, countryCode) || other.countryCode == countryCode));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,lat,lon,cityName);
+int get hashCode => Object.hash(runtimeType,lat,lon,cityName,countryCode);
 
 @override
 String toString() {
-  return 'WeatherEvent.locationSelected(lat: $lat, lon: $lon, cityName: $cityName)';
+  return 'WeatherEvent.locationSelected(lat: $lat, lon: $lon, cityName: $cityName, countryCode: $countryCode)';
 }
 
 
@@ -288,7 +289,7 @@ abstract mixin class $WeatherLocationSelectedCopyWith<$Res> implements $WeatherE
   factory $WeatherLocationSelectedCopyWith(WeatherLocationSelected value, $Res Function(WeatherLocationSelected) _then) = _$WeatherLocationSelectedCopyWithImpl;
 @useResult
 $Res call({
- double lat, double lon, String cityName
+ double lat, double lon, String cityName, String? countryCode
 });
 
 
@@ -305,12 +306,13 @@ class _$WeatherLocationSelectedCopyWithImpl<$Res>
 
 /// Create a copy of WeatherEvent
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? lat = null,Object? lon = null,Object? cityName = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? lat = null,Object? lon = null,Object? cityName = null,Object? countryCode = freezed,}) {
   return _then(WeatherLocationSelected(
 lat: null == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
 as double,lon: null == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
 as double,cityName: null == cityName ? _self.cityName : cityName // ignore: cast_nullable_to_non_nullable
-as String,
+as String,countryCode: freezed == countryCode ? _self.countryCode : countryCode // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -497,12 +499,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( WeatherModel weather,  List<ForecastModel> forecast,  bool useCelsius)?  loaded,TResult Function( WeatherFailure failure)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( WeatherModel weather,  List<ForecastModel> forecast,  List<DailyForecastModel> dailyForecast,  bool useCelsius)?  loaded,TResult Function( WeatherFailure failure)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case WeatherInitial() when initial != null:
 return initial();case WeatherLoading() when loading != null:
 return loading();case WeatherLoaded() when loaded != null:
-return loaded(_that.weather,_that.forecast,_that.useCelsius);case WeatherError() when error != null:
+return loaded(_that.weather,_that.forecast,_that.dailyForecast,_that.useCelsius);case WeatherError() when error != null:
 return error(_that.failure);case _:
   return orElse();
 
@@ -521,12 +523,12 @@ return error(_that.failure);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( WeatherModel weather,  List<ForecastModel> forecast,  bool useCelsius)  loaded,required TResult Function( WeatherFailure failure)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( WeatherModel weather,  List<ForecastModel> forecast,  List<DailyForecastModel> dailyForecast,  bool useCelsius)  loaded,required TResult Function( WeatherFailure failure)  error,}) {final _that = this;
 switch (_that) {
 case WeatherInitial():
 return initial();case WeatherLoading():
 return loading();case WeatherLoaded():
-return loaded(_that.weather,_that.forecast,_that.useCelsius);case WeatherError():
+return loaded(_that.weather,_that.forecast,_that.dailyForecast,_that.useCelsius);case WeatherError():
 return error(_that.failure);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -541,12 +543,12 @@ return error(_that.failure);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( WeatherModel weather,  List<ForecastModel> forecast,  bool useCelsius)?  loaded,TResult? Function( WeatherFailure failure)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( WeatherModel weather,  List<ForecastModel> forecast,  List<DailyForecastModel> dailyForecast,  bool useCelsius)?  loaded,TResult? Function( WeatherFailure failure)?  error,}) {final _that = this;
 switch (_that) {
 case WeatherInitial() when initial != null:
 return initial();case WeatherLoading() when loading != null:
 return loading();case WeatherLoaded() when loaded != null:
-return loaded(_that.weather,_that.forecast,_that.useCelsius);case WeatherError() when error != null:
+return loaded(_that.weather,_that.forecast,_that.dailyForecast,_that.useCelsius);case WeatherError() when error != null:
 return error(_that.failure);case _:
   return null;
 
@@ -623,7 +625,7 @@ String toString() {
 
 
 class WeatherLoaded implements WeatherState {
-  const WeatherLoaded({required this.weather, required final  List<ForecastModel> forecast, this.useCelsius = true}): _forecast = forecast;
+  const WeatherLoaded({required this.weather, required final  List<ForecastModel> forecast, required final  List<DailyForecastModel> dailyForecast, this.useCelsius = true}): _forecast = forecast,_dailyForecast = dailyForecast;
   
 
  final  WeatherModel weather;
@@ -632,6 +634,13 @@ class WeatherLoaded implements WeatherState {
   if (_forecast is EqualUnmodifiableListView) return _forecast;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_forecast);
+}
+
+ final  List<DailyForecastModel> _dailyForecast;
+ List<DailyForecastModel> get dailyForecast {
+  if (_dailyForecast is EqualUnmodifiableListView) return _dailyForecast;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_dailyForecast);
 }
 
 @JsonKey() final  bool useCelsius;
@@ -646,16 +655,16 @@ $WeatherLoadedCopyWith<WeatherLoaded> get copyWith => _$WeatherLoadedCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WeatherLoaded&&(identical(other.weather, weather) || other.weather == weather)&&const DeepCollectionEquality().equals(other._forecast, _forecast)&&(identical(other.useCelsius, useCelsius) || other.useCelsius == useCelsius));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WeatherLoaded&&(identical(other.weather, weather) || other.weather == weather)&&const DeepCollectionEquality().equals(other._forecast, _forecast)&&const DeepCollectionEquality().equals(other._dailyForecast, _dailyForecast)&&(identical(other.useCelsius, useCelsius) || other.useCelsius == useCelsius));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,weather,const DeepCollectionEquality().hash(_forecast),useCelsius);
+int get hashCode => Object.hash(runtimeType,weather,const DeepCollectionEquality().hash(_forecast),const DeepCollectionEquality().hash(_dailyForecast),useCelsius);
 
 @override
 String toString() {
-  return 'WeatherState.loaded(weather: $weather, forecast: $forecast, useCelsius: $useCelsius)';
+  return 'WeatherState.loaded(weather: $weather, forecast: $forecast, dailyForecast: $dailyForecast, useCelsius: $useCelsius)';
 }
 
 
@@ -666,7 +675,7 @@ abstract mixin class $WeatherLoadedCopyWith<$Res> implements $WeatherStateCopyWi
   factory $WeatherLoadedCopyWith(WeatherLoaded value, $Res Function(WeatherLoaded) _then) = _$WeatherLoadedCopyWithImpl;
 @useResult
 $Res call({
- WeatherModel weather, List<ForecastModel> forecast, bool useCelsius
+ WeatherModel weather, List<ForecastModel> forecast, List<DailyForecastModel> dailyForecast, bool useCelsius
 });
 
 
@@ -683,11 +692,12 @@ class _$WeatherLoadedCopyWithImpl<$Res>
 
 /// Create a copy of WeatherState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? weather = null,Object? forecast = null,Object? useCelsius = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? weather = null,Object? forecast = null,Object? dailyForecast = null,Object? useCelsius = null,}) {
   return _then(WeatherLoaded(
 weather: null == weather ? _self.weather : weather // ignore: cast_nullable_to_non_nullable
 as WeatherModel,forecast: null == forecast ? _self._forecast : forecast // ignore: cast_nullable_to_non_nullable
-as List<ForecastModel>,useCelsius: null == useCelsius ? _self.useCelsius : useCelsius // ignore: cast_nullable_to_non_nullable
+as List<ForecastModel>,dailyForecast: null == dailyForecast ? _self._dailyForecast : dailyForecast // ignore: cast_nullable_to_non_nullable
+as List<DailyForecastModel>,useCelsius: null == useCelsius ? _self.useCelsius : useCelsius // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }

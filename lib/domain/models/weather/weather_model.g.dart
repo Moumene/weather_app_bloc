@@ -19,8 +19,14 @@ _WeatherModel _$WeatherModelFromJson(Map<String, dynamic> json) =>
       iconCode: json['icon_code'] as String,
       cityName: json['city_name'] as String,
       countryCode: json['country_code'] as String,
-      sunrise: DateTime.parse(json['sunrise'] as String),
-      sunset: DateTime.parse(json['sunset'] as String),
+      sunrise: json['sunrise'] == null
+          ? null
+          : DateTime.parse(json['sunrise'] as String),
+      sunset: json['sunset'] == null
+          ? null
+          : DateTime.parse(json['sunset'] as String),
+      timezoneOffset: (json['timezone_offset'] as num?)?.toInt(),
+      uvi: (json['uvi'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$WeatherModelToJson(_WeatherModel instance) =>
@@ -36,6 +42,8 @@ Map<String, dynamic> _$WeatherModelToJson(_WeatherModel instance) =>
       'icon_code': instance.iconCode,
       'city_name': instance.cityName,
       'country_code': instance.countryCode,
-      'sunrise': instance.sunrise.toIso8601String(),
-      'sunset': instance.sunset.toIso8601String(),
+      'sunrise': instance.sunrise?.toIso8601String(),
+      'sunset': instance.sunset?.toIso8601String(),
+      'timezone_offset': instance.timezoneOffset,
+      'uvi': instance.uvi,
     };

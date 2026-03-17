@@ -7,6 +7,7 @@ sealed class WeatherState with _$WeatherState {
   const factory WeatherState.loaded({
     required WeatherModel weather,
     required List<ForecastModel> forecast,
+    required List<DailyForecastModel> dailyForecast,
     @Default(true) bool useCelsius,
   }) = WeatherLoaded;
   const factory WeatherState.error(WeatherFailure failure) = WeatherError;

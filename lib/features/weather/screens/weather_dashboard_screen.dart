@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../core/errors/weather_failure.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/utils/forecast_utils.dart';
 import '../../../domain/models/daily_forecast/daily_forecast_model.dart';
 import '../../../domain/models/forcast/forecast_model.dart';
 import '../../../domain/models/weather/weather_model.dart';
@@ -25,8 +24,8 @@ class WeatherDashboardScreen extends StatelessWidget {
         return switch (state) {
           WeatherInitial() => _buildInitialView(context),
           WeatherLoading() => _buildLoadingView(context),
-          WeatherLoaded(:final weather, :final forecast, :final useCelsius) =>
-            _buildDashboard(context, weather, forecast, useCelsius),
+          WeatherLoaded(:final weather, :final forecast, :final dailyForecast, :final useCelsius) =>
+            _buildDashboard(context, weather, forecast, dailyForecast, useCelsius),
           WeatherError(:final failure) => _buildErrorView(context, failure),
         };
       },
@@ -121,10 +120,10 @@ class WeatherDashboardScreen extends StatelessWidget {
     BuildContext context,
     WeatherModel weather,
     List<ForecastModel> forecast,
+    List<DailyForecastModel> dailyForecast,
     bool useCelsius,
   ) {
     final temp = _formatTemp(weather.temperature, useCelsius);
-    final dailyForecast = groupForecastByDay(forecast);
 
     return Container(
       decoration: const BoxDecoration(
@@ -293,7 +292,7 @@ class WeatherDashboardScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            AppLocalizations.of(context)!.tenDayForecast,
+                            AppLocalizations.of(context)!.eightDayForecast,
                             style: GoogleFonts.inter(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
@@ -325,11 +324,16 @@ class WeatherDashboardScreen extends StatelessWidget {
                   crossAxisSpacing: 16,
                   childAspectRatio: 1.1,
                   children: [
-                    _UVIndexCard(uvIndex: 2),
+                    _UVIndexCard(uvIndex: weather.uvi ?? 2),
                     _DetailCard(
                       icon: Icons.wb_twilight,
                       title: AppLocalizations.of(context)!.sunset,
-                      value: _formatTime(weather.sunset),
+                      value: weather.sunset != null
+                          ? _formatTime(
+                              weather.sunset!,
+                              timezoneOffset: weather.timezoneOffset,
+                            )
+                          : '—',
                     ),
                     _WindCard(
                       windSpeed: weather.windSpeed,
@@ -443,9 +447,12 @@ class WeatherDashboardScreen extends StatelessWidget {
     return '${f.round()}°';
   }
 
-  String _formatTime(DateTime dt) {
-    final h = dt.hour.toString().padLeft(2, '0');
-    final m = dt.minute.toString().padLeft(2, '0');
+  String _formatTime(DateTime dt, {int? timezoneOffset}) {
+    final localDt = timezoneOffset != null
+        ? dt.add(Duration(seconds: timezoneOffset))
+        : dt;
+    final h = localDt.hour.toString().padLeft(2, '0');
+    final m = localDt.minute.toString().padLeft(2, '0');
     return '$h:$m';
   }
 
