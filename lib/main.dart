@@ -14,7 +14,6 @@ import 'features/settings/bloc/settings_bloc.dart';
 import 'features/weather/bloc/weather_bloc.dart';
 import 'features/home/screens/home_shell.dart';
 import 'l10n/app_localizations.dart';
-import 'l10n/app_localizations_delegate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,7 +69,7 @@ class WeatherApp extends StatelessWidget {
               theme: AppTheme.darkTheme,
               locale: locale,
               localizationsDelegates: const [
-                AppLocalizationsDelegate(),
+                AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,

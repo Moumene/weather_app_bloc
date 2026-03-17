@@ -1,0 +1,107 @@
+{
+  "@@locale": "en",
+  "appTitle": "Weather",
+  "@appTitle": {
+    "description": "The title of the app"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings screen title"
+  },
+  "searchLocation": "Search location",
+  "@searchLocation": {
+    "description": "Search location placeholder"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language setting label"
+  },
+  "units": "Units",
+  "@units": {
+    "description": "Units setting label"
+  },
+  "celsius": "Celsius",
+  "@celsius": {
+    "description": "Celsius temperature unit"
+  },
+  "fahrenheit": "Fahrenheit",
+  "@fahrenheit": {
+    "description": "Fahrenheit temperature unit"
+  },
+  "currentLocation": "Current Location",
+  "@currentLocation": {
+    "description": "Current location label"
+  },
+  "humidity": "Humidity",
+  "@humidity": {
+    "description": "Humidity weather metric"
+  },
+  "pressure": "Pressure",
+  "@pressure": {
+    "description": "Atmospheric pressure metric"
+  },
+  "wind": "Wind",
+  "@wind": {
+    "description": "Wind weather metric"
+  },
+  "feelsLike": "Feels like",
+  "@feelsLike": {
+    "description": "Feels-like temperature label"
+  },
+  "forecast": "Forecast",
+  "@forecast": {
+    "description": "Forecast section label"
+  },
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Refresh button label"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Generic error message"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Retry button label"
+  },
+  "noResults": "No results found",
+  "@noResults": {
+    "description": "No search results message"
+  },
+  "permissionDenied": "Location permission denied",
+  "@permissionDenied": {
+    "description": "Location permission error"
+  },
+  "locationDisabled": "Location services disabled",
+  "@locationDisabled": {
+    "description": "Location services error"
+  },
+  "rising": "Rising",
+  "@rising": {
+    "description": "Pressure trend rising"
+  },
+  "falling": "Falling",
+  "@falling": {
+    "description": "Pressure trend falling"
+  },
+  "steady": "Steady",
+  "@steady": {
+    "description": "Pressure trend steady"
+  },
+  "hourlyForecast": "Hourly Forecast",
+  "@hourlyForecast": {
+    "description": "Hourly forecast section title"
+  },
+  "tenDayForecast": "10-Day Forecast",
+  "@tenDayForecast": {
+    "description": "10-day forecast section title"
+  },
+  "eightDayForecast": "8-Day Forecast",
+  "@eightDayForecast": {
+    "description": "8-day forecast section title"
+  },
+  "sunset": "Sunset",
+  "@sunset": {
+    "description": "Sunset time label"
+  }
+}
