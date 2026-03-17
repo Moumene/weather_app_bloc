@@ -1,29 +1,14 @@
-part of 'location_search_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class LocationSearchState extends Equatable {
-  const LocationSearchState();
+import '../../../domain/models/location_model.dart';
 
-  @override
-  List<Object?> get props => [];
-}
+part 'location_search_state.freezed.dart';
 
-class LocationSearchInitial extends LocationSearchState {
-  const LocationSearchInitial();
-}
-
-class LocationSearchLoading extends LocationSearchState {
-  const LocationSearchLoading();
-}
-
-class LocationSearchLoaded extends LocationSearchState {
-  const LocationSearchLoaded(this.locations);
-
-  final List<LocationModel> locations;
-
-  @override
-  List<Object?> get props => [locations];
-}
-
-class LocationSearchFailure extends LocationSearchState {
-  const LocationSearchFailure();
+@freezed
+sealed class LocationSearchState with _$LocationSearchState {
+  const factory LocationSearchState.initial() = LocationSearchInitial;
+  const factory LocationSearchState.loading() = LocationSearchLoading;
+  const factory LocationSearchState.loaded(List<LocationModel> locations) =
+      LocationSearchLoaded;
+  const factory LocationSearchState.failure() = LocationSearchFailure;
 }

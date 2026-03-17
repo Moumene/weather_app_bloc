@@ -1,17 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 
-import '../../../domain/models/location_model.dart';
 import '../../../domain/repositories/weather_repository.dart';
 
-part 'location_search_event.dart';
-part 'location_search_state.dart';
+import 'location_search_event.dart';
+import 'location_search_state.dart';
+
+export 'location_search_event.dart';
+export 'location_search_state.dart';
 
 class LocationSearchBloc extends Bloc<LocationSearchEvent, LocationSearchState> {
   LocationSearchBloc({
     required WeatherRepository weatherRepository,
   })  : _weatherRepo = weatherRepository,
-        super(const LocationSearchInitial()) {
+        super(const LocationSearchState.initial()) {
     on<LocationSearchQueryChanged>(_onQueryChanged);
     on<LocationSearchCleared>(_onCleared);
   }
@@ -24,17 +25,17 @@ class LocationSearchBloc extends Bloc<LocationSearchEvent, LocationSearchState> 
   ) async {
     final query = event.query.trim();
     if (query.isEmpty) {
-      emit(const LocationSearchInitial());
+      emit(const LocationSearchState.initial());
       return;
     }
 
-    emit(const LocationSearchLoading());
+    emit(const LocationSearchState.loading());
 
     try {
       final locations = await _weatherRepo.searchLocations(query);
-      emit(LocationSearchLoaded(locations));
+      emit(LocationSearchState.loaded(locations));
     } catch (_) {
-      emit(const LocationSearchFailure());
+      emit(const LocationSearchState.failure());
     }
   }
 
@@ -42,6 +43,6 @@ class LocationSearchBloc extends Bloc<LocationSearchEvent, LocationSearchState> 
     LocationSearchCleared event,
     Emitter<LocationSearchState> emit,
   ) {
-    emit(const LocationSearchInitial());
+    emit(const LocationSearchState.initial());
   }
 }

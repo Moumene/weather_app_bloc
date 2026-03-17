@@ -1,30 +1,13 @@
-part of 'settings_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-sealed class SettingsEvent extends Equatable {
-  const SettingsEvent();
+part 'settings_event.freezed.dart';
 
-  @override
-  List<Object?> get props => [];
-}
-
-class SettingsLoadRequested extends SettingsEvent {
-  const SettingsLoadRequested();
-}
-
-class SettingsLanguageChanged extends SettingsEvent {
-  const SettingsLanguageChanged({required this.languageCode});
-
-  final String languageCode;
-
-  @override
-  List<Object?> get props => [languageCode];
-}
-
-class SettingsUnitChanged extends SettingsEvent {
-  const SettingsUnitChanged({required this.useCelsius});
-
-  final bool useCelsius;
-
-  @override
-  List<Object?> get props => [useCelsius];
+@freezed
+sealed class SettingsEvent with _$SettingsEvent {
+  const factory SettingsEvent.loadRequested() = SettingsLoadRequested;
+  const factory SettingsEvent.languageChanged({
+    required String languageCode,
+  }) = SettingsLanguageChanged;
+  const factory SettingsEvent.unitChanged({required bool useCelsius}) =
+      SettingsUnitChanged;
 }
